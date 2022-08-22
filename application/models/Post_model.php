@@ -8,12 +8,55 @@ class Post_model extends CI_Model{
 
 	public function get_posts($slug= FALSE)
 	{
+		$this->db->join('categories','categories.id = posts.category_id');
+		// $this->db->select('posts.*,categories.name');
 		if($slug === FALSE)
 		{
+			$this->db->order_by('posts.id','DESC');
 			$query = $this->db->get('posts');
 			return $query->result_array();
 		}
+		
 		$query = $this->db->get_where('posts',array('slug' => $slug));
 		return $query->row_array();
 	}
+	public function create_post()
+	{
+		$slug = url_title($this->input->post('title'));
+		$data = array(
+			'title' => $this->input->post('title'),
+			'slug'=> str_replace(" ","-",$this->input->post('title')),
+			'body' => $this->input->post('body'),
+			'category_id' => $this->input->post('category_id')
+		);
+		return $this->db->insert('posts',$data);
+	}
+
+	public function delete_post($id)
+	{
+		$this->db->where('id',$id);
+		$this->db->delete('posts');
+		return true;
+	}
+
+	public function update_post(){
+		$slug = url_title($this->input->post('title'));
+		$data = array(
+			'title' => $this->input->post('title'),
+			'slug'=> str_replace(" ","-",$this->input->post('title')),
+			'body' => $this->input->post('body'),
+			'category_id' => $this->input->post('category_id')
+		);
+		$id = $this->input->post('id');
+		$this->db->where('id',$id);
+		return $this->db->update('posts',$data);
+	}
+
+	public function get_categories()
+	{
+		$this->db->order_by('name');
+		$query = $this->db->get('categories');
+		return $query->result_array();
+	}
+
 }

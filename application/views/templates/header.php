@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
+	<script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
 	<title>CI Blog</title>
 </head>
 <body>
@@ -27,7 +28,10 @@
 				<li class="nav-item">
           <a class="nav-link" href="<?=base_url();?>about">About</a>
         </li>
-      </ul>>
+      </ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a class="navbar-brand" href="<?=base_url()?>/posts/create">Create Post</a></li>
+			</ul>
     </div>
   </div>
 </nav>
