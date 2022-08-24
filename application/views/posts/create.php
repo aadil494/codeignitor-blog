@@ -2,7 +2,7 @@
 
 
 <?php echo validation_errors(); ?>
-<?php echo form_open('posts/create'); ?>
+<?php echo form_open_multipart('posts/create'); ?>
 	<div class="form-group">
 		<label for="">Title</label>
 		<input type="text" class="form-control" name="title" placeholder="Add Title">
@@ -20,6 +20,10 @@
 			<?php endforeach; ?>
 
 		</select>
+	</div>
+	<div class="form-group">
+		<label> Upload cover image </label>
+		<input type="file" name="userfile" id="" size="20">
 	</div>
 	<button type="submit" class="btn btn-primary mt-2">Submit</button>
 </form>
