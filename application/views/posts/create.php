@@ -22,12 +22,4 @@
 		</select>
 	</div>
 	<button type="submit" class="btn btn-primary mt-2">Submit</button>
-	
-	<script>
-        ClassicEditor
-            .create( document.querySelector( '#editor' ) )
-            .catch( error => {
-                console.error( error );
-            } );
-    </script>
 </form>

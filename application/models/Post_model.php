@@ -8,16 +8,19 @@ class Post_model extends CI_Model{
 
 	public function get_posts($slug= FALSE)
 	{
-		$this->db->join('categories','categories.id = posts.category_id');
-		// $this->db->select('posts.*,categories.name');
-		if($slug === FALSE)
-		{
-			$this->db->order_by('posts.id','DESC');
+		$limit=FALSE;
+		$offset=FALSE;
+		if($limit){
+			$this->db->limit($limit, $offset);
+		}
+		if($slug === FALSE){
+			$this->db->order_by('posts.id', 'DESC');
+			$this->db->join('categories', 'categories.id = posts.category_id');
 			$query = $this->db->get('posts');
 			return $query->result_array();
 		}
-		
-		$query = $this->db->get_where('posts',array('slug' => $slug));
+
+		$query = $this->db->get_where('posts', array('slug' => $slug));
 		return $query->row_array();
 	}
 	public function create_post()
@@ -41,15 +44,18 @@ class Post_model extends CI_Model{
 
 	public function update_post(){
 		$slug = url_title($this->input->post('title'));
+
 		$data = array(
 			'title' => $this->input->post('title'),
-			'slug'=> str_replace(" ","-",$this->input->post('title')),
+			'slug' => $slug,
 			'body' => $this->input->post('body'),
 			'category_id' => $this->input->post('category_id')
 		);
-		$id = $this->input->post('id');
-		$this->db->where('id',$id);
-		return $this->db->update('posts',$data);
+
+		// var_dump($this->input->post()); die();
+
+		$this->db->where('id', $this->input->post('id'));
+		return $this->db->update('posts', $data);
 	}
 
 	public function get_categories()
